@@ -22,11 +22,6 @@ namespace DiceThrower.Mechanics.Thrower
             mainCamera = Camera.main;
         }
 
-        private void Start()
-        {
-            CreateDice();
-        }
-
         private void Update()
         {
             if (!canThrow) return;
@@ -63,7 +58,7 @@ namespace DiceThrower.Mechanics.Thrower
             }
         }
 
-        void CreateDice()
+        public void CreateDice()
         {
             diceToThrow = Instantiate(dicePrefab, diceStartPosition, Quaternion.identity);
             canThrow = true;
