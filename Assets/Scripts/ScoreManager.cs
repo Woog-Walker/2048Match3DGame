@@ -19,6 +19,7 @@ namespace DiceGame.InGameScoreManager
 
         private void Start()
         {
+            HighScoreLoad();
             canvasManager.UpdateCurrentScoreText(currentScore);
         }
 
@@ -28,6 +29,8 @@ namespace DiceGame.InGameScoreManager
             currentScore += incValue;
             canvasManager.UpdateCurrentScoreText(currentScore);
         }
+
+        public int GetCurrentScore() => currentScore;
 
         // HIGH SCORE
         public void HighScoreLoad()
@@ -44,13 +47,13 @@ namespace DiceGame.InGameScoreManager
             }
         }
 
-        public void HighScoreSave(int incValue)
+        public void HighScoreSave()
         {
-            if (!PlayerPrefs.HasKey(highScorePrefs)) PlayerPrefs.SetInt(highScorePrefs, incValue);
+            if (!PlayerPrefs.HasKey(highScorePrefs)) PlayerPrefs.SetInt(highScorePrefs, currentScore);
             else
             {
-                if (incValue > PlayerPrefs.GetInt(highScorePrefs))
-                    PlayerPrefs.SetInt(highScorePrefs, incValue);
+                if (currentScore > PlayerPrefs.GetInt(highScorePrefs))
+                    PlayerPrefs.SetInt(highScorePrefs, currentScore);
             }
         }
     }

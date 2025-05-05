@@ -1,29 +1,37 @@
+using DiceGame.InGameSoundsController;
+using DiceGame.MagneteForDices;
+using DiceGame.SingleDice.Controller;
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
-
+ 
 namespace DiceThrower.Mechanics.Thrower
 {
     public class DiceThrowerController : MonoBehaviour
     {
-        [SerializeField] private GameObject diceToThrow;
-        [SerializeField] private GameObject dicePrefab;
+        [SerializeField] private GameObject diceToThrow, dicePrefab;
         [SerializeField] private Vector3 diceStartPosition;
         [Space]
-        [SerializeField] float forceAmount;
-        [SerializeField] float holdOffset;
-        [SerializeField] float clampValueX;
-        [SerializeField] float timeCdForSpawn;
+        [SerializeField] float forceAmount, holdOffset, clampValueX, timeCdForSpawn;
+        [Space]
+        [SerializeField] bool canThrow, isGameOver = false;
 
-        bool canThrow = false;
+        float chanceFor4x = 25; // 25 % for 4x dice
+
         Camera mainCamera;
+        InGameSounds inGameSounds;
+        DicesMagnetController dicesMagnetController;
 
         private void Awake()
         {
             mainCamera = Camera.main;
+            inGameSounds = FindObjectOfType<InGameSounds>();
+            dicesMagnetController = FindObjectOfType<DicesMagnetController>();
         }
 
         private void Update()
         {
+            if (isGameOver) return;
             if (!canThrow) return;
 
             foreach (Touch touch in Input.touches)
@@ -61,24 +69,63 @@ namespace DiceThrower.Mechanics.Thrower
         public void CreateDice()
         {
             diceToThrow = Instantiate(dicePrefab, diceStartPosition, Quaternion.identity);
+
+            float rndValue = GenerateRandomValueForDice();
+
+            if (chanceFor4x > rndValue)
+                diceToThrow.GetComponent<DiceController>().SetDiceValue(4);
+            else
+                diceToThrow.GetComponent<DiceController>().SetDiceValue(2);
+
+            diceToThrow.GetComponent<DiceController>().SetDiceMaterial();
+            diceToThrow.GetComponent<DiceController>().SetDiceCanvasValue();
+            diceToThrow.GetComponent<DiceController>().DiceAppearTweenSale(timeCdForSpawn);
+
+            StartCoroutine(DelayOnDiceCreation(timeCdForSpawn));
+        }
+
+        float GenerateRandomValueForDice() => Random.Range(0, 100);
+
+        public void CreateDiceOnMerdge(Vector3 worldPos, int diceValue)
+        {
+            var _tmpDice = Instantiate(dicePrefab, worldPos, Quaternion.identity);
+            _tmpDice.GetComponent<DiceController>().SetDiceValue(diceValue);
+            _tmpDice.GetComponent<DiceController>().SetDiceMaterial();
+            _tmpDice.GetComponent<DiceController>().SetDiceCanvasValue();
+            _tmpDice.GetComponent<DiceController>().DiceAppearTweenSale(timeCdForSpawn);
+
+            dicesMagnetController.FindDicesInRange(_tmpDice.transform);
+            GameObject magneteDice =  dicesMagnetController.PushDiceToSimiliar(diceValue);
+            _tmpDice.GetComponent<DiceController>().PerformPushmentUp(magneteDice.transform);
+
+            StartCoroutine(DelayOnDiceCreation(timeCdForSpawn));
+        }
+
+        IEnumerator DelayOnDiceCreation(float timeToWait)
+        {
+            yield return new WaitForSeconds(timeToWait);
             canThrow = true;
         }
 
         void ThrowDice()
         {
-            canThrow = false;
-            // decline to throw dice
+            diceToThrow.GetComponent<DiceController>().PerformPushmentForward();
+            diceToThrow.GetComponent<DiceController>().TrailRendererChangeState(true);
 
-            diceToThrow.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceAmount, ForceMode.Impulse);
+            canThrow = false;
+            diceToThrow = null; // clear dice holder
+
+            inGameSounds.PlaySoundReleaseDice();
 
             RespawnSystem();
         }
 
         private async void RespawnSystem()
         {
-            diceToThrow = null; // clear dice holder
             await Task.Delay((int)(timeCdForSpawn * 1000));
             CreateDice();
         }
+
+        public void SetStateGameOver() => isGameOver = true;
     }
 }
