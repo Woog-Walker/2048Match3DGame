@@ -5,6 +5,7 @@ using DiceGame.Mechanics.DiceMerdger;
 using DiceGame.Mechanics.EndGameCase;
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 namespace DiceGame.SingleDice.Controller
 {
@@ -20,10 +21,10 @@ namespace DiceGame.SingleDice.Controller
         const string diceTag = "Dice";
         const string endGameTriggeringZone = "EndGameZone";
 
+        [Inject] EndGameTriggeringSystem endGameTriggeringSystem;
+        MerdgeDicesController merdgeDicesController;
         DiceMaterialChanger diceMaterialChanger;
         DiceCanvasController diceCanvasController;
-        EndGameTriggeringSystem endGameTriggeringSystem;
-        MerdgeDicesController merdgeDicesController;
 
         TrailRenderer trailRenderer;
         Rigidbody rigidbody;
@@ -34,8 +35,6 @@ namespace DiceGame.SingleDice.Controller
             diceMaterialChanger = GetComponent<DiceMaterialChanger>();
             trailRenderer = GetComponentInChildren<TrailRenderer>();
             rigidbody = GetComponent<Rigidbody>();
-
-            endGameTriggeringSystem = FindObjectOfType<EndGameTriggeringSystem>();
             merdgeDicesController = FindObjectOfType<MerdgeDicesController>();
         }
 
