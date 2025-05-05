@@ -1,8 +1,9 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DiceGame.InGameCanvasManager
+namespace DiceGame.Mechanics.InGameCanvasManager
 {
     public class CanvasManager : MonoBehaviour
     {
@@ -10,21 +11,18 @@ namespace DiceGame.InGameCanvasManager
         [SerializeField] TMP_Text textCurrentScore;
         [SerializeField] TMP_Text textHighScore;
         [SerializeField] GameObject highScoreObject;
-        [Space]
 
         [Header("Tutorial")]
         [SerializeField] TMP_Text textTutorial;
         [SerializeField] Image imageTutorial;
-        [Space]
 
         [Header("Game Over Panel")]
         [SerializeField] GameObject panelGameOver;
         [SerializeField] TMP_Text textOverScore;
-        [Space]
 
-        [SerializeField] Image [] startLineImages;
+        [SerializeField] Image[] startLineImages;
         [SerializeField] Button buttonPlay;
-         
+
         #region TUTORIAL
         public void TutorialDisable()
         {
@@ -52,10 +50,7 @@ namespace DiceGame.InGameCanvasManager
         public void UiButtonPlayIsActive(bool isActive) => buttonPlay.gameObject.SetActive(isActive);
 
         // IMAGES ON BOARD - START LINES
-        public void UiOnBoardStartLinesIsActive()
-        {
-            foreach (var img in startLineImages)
-                img.enabled = true;
-        }
+        public void UiOnBoardStartLinesIsActive() =>
+            Array.ForEach(startLineImages, img => img.enabled = true);
     }
 }

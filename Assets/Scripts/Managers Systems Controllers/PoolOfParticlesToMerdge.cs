@@ -1,31 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolOfParticlesToMerdge : MonoBehaviour
+namespace DiceGame.Mechanics.PoolOfVFX
 {
-    [SerializeField] List<ParticleSystem> listOfMerdgeVfxs = new List<ParticleSystem>();
-
-    // simple pool depends on disabled vfx objects
-    // when we check for disabled one and grab object from pool after we activate it
-    // when we are going to back vfx back to pool - we disable it - back transform to that parent object
-
-    public ParticleSystem GetVfxFromPool()
+    public class PoolOfParticlesToMerdge : MonoBehaviour
     {
-        foreach (var vfx in listOfMerdgeVfxs)
+        [SerializeField] private List<ParticleSystem> listOfMerdgeVfxs = new List<ParticleSystem>();
+
+        // Simple pool based on inactive VFX objects.
+        // When we need one — we check for an inactive one, activate it and return.
+        // When returning VFX — we disable it and return it to this GameObject's transform.
+
+        public ParticleSystem GetVfxFromPool()
         {
-            if (!vfx.gameObject.activeInHierarchy)
+            foreach (var vfx in listOfMerdgeVfxs)
             {
-                vfx.gameObject.SetActive(true);
-                return vfx;
+                if (!vfx.gameObject.activeInHierarchy)
+                {
+                    vfx.gameObject.SetActive(true);
+                    return vfx;
+                }
             }
+
+            return null;
         }
 
-        return null;
-    }
-
-    public void PutBackVFxToPool(ParticleSystem incVfx) 
-    {
-        incVfx.gameObject.SetActive(false);
-        incVfx.transform.SetParent(transform);
+        public void PutBackVFxToPool(ParticleSystem incVfx)
+        {
+            incVfx.gameObject.SetActive(false);
+            incVfx.transform.SetParent(transform);
+        }
     }
 }

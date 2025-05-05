@@ -1,6 +1,6 @@
 using DiceGame.Mechanics.InGameScoreManager;
 using DiceThrower.Mechanics.Thrower;
-using DiceGame.InGameCanvasManager;
+using DiceGame.Mechanics.InGameCanvasManager;
 using UnityEngine;
 using Zenject;
 
@@ -8,19 +8,23 @@ namespace DiceGame.Mechanics.EndGameCase
 {
     public class EndGameTriggeringSystem : MonoBehaviour
     {
-        [Inject] CanvasManager canvasManager;
-        [Inject] ScoreManager scoreManager;
-        [Inject] DiceThrowerController diceThrowerController;
+        [Inject] private CanvasManager _canvasManager;
+        [Inject] private ScoreManager _scoreManager;
+        [Inject] private DiceThrowerController _diceThrower;
 
         public void PerformEndGameCase()
         {
-            diceThrowerController.SetStateGameOver();
+            _diceThrower.SetStateGameOver();
+            _scoreManager.HighScoreSave();
 
-            scoreManager.HighScoreSave();
+            SetUpAndUpdateUi();
+        }
 
-            canvasManager.UiCurrentScoreIsActive(false);
-            canvasManager.UiOpenGameOverWindow();
-            canvasManager.UpdateEndScoreText(scoreManager.GetCurrentScore());
+        private void SetUpAndUpdateUi()
+        {
+            _canvasManager.UiCurrentScoreIsActive(false);
+            _canvasManager.UiOpenGameOverWindow();
+            _canvasManager.UpdateEndScoreText(_scoreManager.GetCurrentScore());
         }
     }
 }

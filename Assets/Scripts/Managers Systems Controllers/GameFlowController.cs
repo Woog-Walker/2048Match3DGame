@@ -1,45 +1,46 @@
 using UnityEngine;
-using DiceGame.InGameCanvasManager;
+using DiceGame.Mechanics.InGameCanvasManager;
 using DiceThrower.Mechanics.Thrower;
 using System.Collections;
 using DiceGame.Mechanics.InGameSoundsController;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace DiceGame.GameFlow
+namespace DiceGame.Mechanics.GameFlow
 {
     public class GameFlowController : MonoBehaviour
     {
-        [Inject] CanvasManager canvasManager;
-        [Inject] DiceThrowerController diceThrowerController;
-        [Inject] InGameSounds inGameSounds;
+        [Inject] private CanvasManager _canvasManager;
+        [Inject] private DiceThrowerController _diceThrower;
+        [Inject] private InGameSounds _inGameSounds;
 
-        int targetFps = 100;
+        [SerializeField] private int targetFps = 100;
 
-        private void Start() => SetTargetAppFps();
+        private void Start() => Application.targetFrameRate = targetFps;
 
-        public void StartGameFlow() => StartCoroutine(DelayForStartEngine());
+        public void StartGameFlow() => StartCoroutine(StartGameSequence());
 
-        IEnumerator DelayForStartEngine()
+        private IEnumerator StartGameSequence()
         {
-            diceThrowerController.CreateDice();
+            _diceThrower.CreateDice();
 
-            canvasManager.TutorialDisable();
-            canvasManager.UiOnBoardStartLinesIsActive();
-            canvasManager.UiButtonPlayIsActive(false);
-            canvasManager.UiCurrentScoreIsActive(true);
-            canvasManager.UiHighScoreIsActive(false);
+            SetupUIOnGameStart();
 
             yield return new WaitForEndOfFrame();
 
-            inGameSounds.PlaySoundButtonClick();                                   // play sound on button play click
-
+            _inGameSounds.PlaySoundButtonClick();
         }
 
-        // SET FPS FOR MOBILE DEVICES
-        void SetTargetAppFps() => Application.targetFrameRate = targetFps;
+        private void SetupUIOnGameStart()
+        {
+            _canvasManager.TutorialDisable();
+            _canvasManager.UiOnBoardStartLinesIsActive();
+            _canvasManager.UiButtonPlayIsActive(false);
+            _canvasManager.UiCurrentScoreIsActive(true);
+            _canvasManager.UiHighScoreIsActive(false);
+        }
 
-        // RESTART SCENE
-        public void RestartScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        public void RestartScene() =>
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

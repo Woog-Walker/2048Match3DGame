@@ -592,15 +592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b8f95eca3dc9d43a74aa7e3286ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceToThrow: {fileID: 0}
   dicePrefab: {fileID: 2761657224200973525, guid: aaa0aaf6249df864bb2a6f04d2fe9d22, type: 3}
   diceStartPosition: {x: 0, y: 2.25, z: -4}
   forceAmount: 25
   holdOffset: 1
   clampValueX: 3
   timeCdForSpawn: 0.4
-  canThrow: 0
-  isGameOver: 0
 --- !u!1 &95089641
 GameObject:
   m_ObjectHideFlags: 0
@@ -2670,6 +2667,11 @@ MonoBehaviour:
   soundPlayButtonClick: {fileID: 8300000, guid: e5b06562cb3f0f1469c96cfd0ff03314, type: 3}
   soundReleaseDice: {fileID: 8300000, guid: 0aa3fd483d2a7bd4dba01052de0b08f2, type: 3}
   soundDicesMerdge: {fileID: 8300000, guid: 672d8c283882d2e42a3c3be26cf42b96, type: 3}
+  soundSource: {fileID: 0}
+  pitchMin: 0.95
+  pitchMax: 1.1
+  volumeMin: 0.9
+  volumeMax: 1.1
 --- !u!81 &1107471181
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3808,8 +3810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17e1727f1754df498682a35a7d33b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dice_1: {fileID: 0}
-  dice_2: {fileID: 0}
   dicePrefab: {fileID: 2761657224200973525, guid: aaa0aaf6249df864bb2a6f04d2fe9d22, type: 3}
 --- !u!4 &1383767472
 Transform:
@@ -4897,6 +4897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c038f86bbf5e74d41a83854c4bd0c3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetFps: 100
 --- !u!1001 &1867431999
 PrefabInstance:
   m_ObjectHideFlags: 0

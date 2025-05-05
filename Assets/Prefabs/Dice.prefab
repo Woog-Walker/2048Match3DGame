@@ -399,6 +399,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceValue: 2
+  pushmentForwardForce: 25
+  pushmentUpForce: 12
+  magneteMultiplyer: 0.13
 --- !u!114 &7919909718857841855
 MonoBehaviour:
   m_ObjectHideFlags: 0

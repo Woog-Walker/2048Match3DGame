@@ -1,22 +1,17 @@
-using DiceGame.GameFlow;
-using UnityEngine;
+using DiceGame.Mechanics.GameFlow;
 using UnityEngine.UI;
+using UnityEngine;
 using Zenject;
 
 namespace DiceGame.Canvas.ButtonSettings
 {
     public class UiButtonRestartSubscriber : MonoBehaviour
     {
-        Button startButton;
-        [Inject] GameFlowController gameFlowController;
+        private Button startButton;
+        [Inject] private GameFlowController gameFlowController;
 
-        private void Awake()
-        {
-            startButton = GetComponent<Button>();;
-        }
-
+        private void Awake() => startButton = GetComponent<Button>();
         private void Start() => startButton.onClick.AddListener(SubscribeButton);
-
-        void SubscribeButton() => gameFlowController.RestartScene();
+        private void SubscribeButton() => gameFlowController.RestartScene();
     }
 }

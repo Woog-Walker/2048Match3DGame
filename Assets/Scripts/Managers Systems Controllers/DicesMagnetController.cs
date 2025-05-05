@@ -1,39 +1,30 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using DiceGame.SingleDice.Controller;
 
 namespace DiceGame.Mechanics.MagneteForDices
 {
     public class DicesMagnetController : MonoBehaviour
     {
-        public List<GameObject> dicesInRange = new List<GameObject>();
+        public List<GameObject> dicesInRange = new();
 
         [SerializeField] private float searchRadius;
-
-        const string diceTag = "Dice";
+        private const string diceTag = "Dice";
 
         public void FindDicesInRange(Transform incDice)
         {
-            dicesInRange.Clear(); // Clear the list before populating
+            dicesInRange.Clear();
 
-            Collider[] colliders = Physics.OverlapSphere(incDice.position, searchRadius);
+            var colliders = Physics.OverlapSphere(incDice.position, searchRadius);
 
-            foreach (Collider col in colliders)
+            foreach (var col in colliders)
                 if (col.CompareTag(diceTag))
                     dicesInRange.Add(col.gameObject);
         }
 
-        public GameObject PushDiceToSimiliar(int incDiceValue)
-        {
-            foreach (GameObject dice in dicesInRange)
-            {
-                int tmpDiceValue = dice.GetComponent<DiceController>().GetDiceValue();
-
-                if (incDiceValue == tmpDiceValue)                
-                    return dice;              
-            }
-
-            return null;
-        }
+        public GameObject PushDiceToSimiliar(int incDiceValue) =>
+            dicesInRange.FirstOrDefault(dice =>
+                dice.GetComponent<DiceController>().GetDiceValue() == incDiceValue);
     }
 }

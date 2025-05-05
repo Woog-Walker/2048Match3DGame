@@ -1,5 +1,5 @@
 using UnityEngine;
-using DiceGame.InGameCanvasManager;
+using DiceGame.Mechanics.InGameCanvasManager;
 using Zenject;
 
 namespace DiceGame.Mechanics.InGameScoreManager

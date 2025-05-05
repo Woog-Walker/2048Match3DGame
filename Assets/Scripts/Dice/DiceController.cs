@@ -5,29 +5,33 @@ using DiceGame.Mechanics.DiceMerdger;
 using DiceGame.Mechanics.EndGameCase;
 using DG.Tweening;
 using UnityEngine;
-using Zenject;
 
 namespace DiceGame.SingleDice.Controller
 {
     public class DiceController : MonoBehaviour
     {
-        [SerializeField] int diceValue;
+        [SerializeField] private int diceValue;
+        [SerializeField] private float pushmentForwardForce, pushmentUpForce, magneteMultiplyer;
 
-        float pushmentForwardForce = 25;
-        float pushmentUpForce = 10;
-        float magneteMultiplyer = 0.125f;
+        private bool isTriggeringWithEndGame = false;
 
-        bool isTriggeringWithEndGame = false;
-        const string diceTag = "Dice";
-        const string endGameTriggeringZone = "EndGameZone";
+        private const string diceTag = "Dice";
+        private const string endGameTriggeringZone = "EndGameZone";
 
-        [Inject] EndGameTriggeringSystem endGameTriggeringSystem;
-        MerdgeDicesController merdgeDicesController;
-        DiceMaterialChanger diceMaterialChanger;
-        DiceCanvasController diceCanvasController;
+        private EndGameTriggeringSystem endGameTriggeringSystem;
+        private MerdgeDicesController merdgeDicesController;
 
-        TrailRenderer trailRenderer;
-        Rigidbody rigidbody;
+        private DiceMaterialChanger diceMaterialChanger;
+        private DiceCanvasController diceCanvasController;
+        private TrailRenderer trailRenderer;
+        private new Rigidbody rigidbody;
+
+        static readonly Dictionary<int, int> valueToMaterialIndex = new()
+        {
+            { 2, 0 }, { 4, 1 }, { 8, 2 }, { 16, 3 },
+            { 32, 4 }, { 64, 5 }, { 128, 6 },
+            { 256, 6 }, { 512, 6 }, { 1024, 6 }
+        };
 
         private void Awake()
         {
@@ -35,86 +39,59 @@ namespace DiceGame.SingleDice.Controller
             diceMaterialChanger = GetComponent<DiceMaterialChanger>();
             trailRenderer = GetComponentInChildren<TrailRenderer>();
             rigidbody = GetComponent<Rigidbody>();
+
             merdgeDicesController = FindObjectOfType<MerdgeDicesController>();
+            endGameTriggeringSystem = FindObjectOfType<EndGameTriggeringSystem>();
         }
 
-        // DICE VALUE
-        public void SetDiceValue(int incValue) => diceValue = incValue;
-        public int GetDiceValue() => diceValue;
-
-        // RIGIDBODY PUSHMENT
-        public void PerformPushmentForward() => rigidbody.AddForce(Vector3.forward * pushmentForwardForce, ForceMode.Impulse);
-
-        public void PerformPushmentUp(Transform magneteDiceTransform)
-        {
-            if (magneteDiceTransform != null)
-            {
-                Vector3 directionToMagnet = (magneteDiceTransform.position - transform.position).normalized;
-                Vector3 slightPull = directionToMagnet * magneteMultiplyer;
-                Vector3 finalForce = (Vector3.up + slightPull).normalized * pushmentUpForce;
-                rigidbody.AddForce(finalForce, ForceMode.Impulse);
-            }
-            else            
-                rigidbody.AddForce(Vector3.up * pushmentUpForce, ForceMode.Impulse);            
-        }
-
-        public void SetDiceCanvasValue() => diceCanvasController.UpdateDiceValue(diceValue);
-        public void EnableCaseToTriggerWithEndGameZone() => isTriggeringWithEndGame = true;
         public void TrailRendererChangeState(bool incState) => trailRenderer.enabled = incState;
 
-        // DICE TWEEN SCALE ANIMATION
         public void DiceAppearTweenSale(float scaleTime)
         {
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, scaleTime);
         }
 
-        // DICTIONARY FOR MATERIALS COLORS
-        Dictionary<int, int> valueToMaterialIndex = new Dictionary<int, int>
-        {
-            { 2, 0 },
-            { 4, 1 },
-            { 8, 2 },
-            { 16, 3 },
-            { 32, 4 },
-            { 64, 5 },
-            { 128, 6 },
-            { 256, 6 },
-            { 512, 6 },
-            { 1024, 6 },
-        };
         public void SetDiceMaterial()
         {
             if (valueToMaterialIndex.TryGetValue(diceValue, out int index))
                 diceMaterialChanger.ChangeDiceMaterial(index);
         }
 
-        // TRIGGERING AND COLLISION
+        public void SetDiceCanvasValue() => diceCanvasController.UpdateDiceValue(diceValue);
+
+        public void EnableCaseToTriggerWithEndGameZone() => isTriggeringWithEndGame = true;
+
+        public void SetDiceValue(int incValue) => diceValue = incValue;
+
+        public int GetDiceValue() => diceValue;
+
+        public void PerformPushmentForward() =>
+            rigidbody.AddForce(Vector3.forward * pushmentForwardForce, ForceMode.Impulse);
+
+        public void PerformPushmentUp(Transform magneteDiceTransform)
+        {
+            Vector3 finalForce = magneteDiceTransform != null
+                ? (Vector3.up + (magneteDiceTransform.position - transform.position).normalized * magneteMultiplyer).normalized * pushmentUpForce
+                : Vector3.up * pushmentUpForce;
+
+            rigidbody.AddForce(finalForce, ForceMode.Impulse);
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.CompareTag(diceTag))
-            {
-                int triggeredDiceValue = collision.transform.GetComponent<DiceController>().GetDiceValue();
-                int currentDice = diceValue;
+            if (!collision.transform.CompareTag(diceTag)) return;
 
-                // only allow the dice with the higher id to merdge to merge
-                if (gameObject.GetInstanceID() > collision.gameObject.GetInstanceID())
-                {
-                    if (triggeredDiceValue == currentDice)
-                    {
-                        merdgeDicesController.PerformDicesMerdge(transform.gameObject, collision.gameObject, triggeredDiceValue);
+            int triggeredDiceValue = collision.transform.GetComponent<DiceController>().GetDiceValue();
 
-                        // destroy one of 2 dices
-                        Destroy(collision.gameObject);
-                    }
-                }
-            }
+            if (gameObject.GetInstanceID() > collision.gameObject.GetInstanceID() && triggeredDiceValue == diceValue)
+                merdgeDicesController.PerformDicesMerdge(gameObject, collision.gameObject, triggeredDiceValue);
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(endGameTriggeringZone))
-                isTriggeringWithEndGame = true;
+                EnableCaseToTriggerWithEndGameZone();
         }
 
         private void OnTriggerEnter(Collider other)

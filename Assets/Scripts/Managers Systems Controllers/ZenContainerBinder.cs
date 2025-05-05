@@ -2,29 +2,31 @@ using Zenject;
 using UnityEngine;
 using DiceThrower.Mechanics.Thrower;
 using DiceGame.Mechanics.MagneteForDices;
-using DiceGame.GameFlow;
-using DiceGame.InGameCanvasManager;
+using DiceGame.Mechanics.GameFlow;
+using DiceGame.Mechanics.InGameCanvasManager;
 using DiceGame.Mechanics.InGameScoreManager;
 using DiceGame.Mechanics.DiceMerdger;
 using DiceGame.Mechanics.InGameSoundsController;
 using DiceGame.Mechanics.EndGameCase;
+using DiceGame.Mechanics.PoolOfVFX;
 
 namespace DiceGame.Mechanics.ContainerBinder
 {
     public class ZenContainerBinder : MonoInstaller
     {
-        [SerializeField] DiceThrowerController diceThrowerController;
-        [SerializeField] DicesMagnetController magneteForDices;
-        [SerializeField] GameFlowController gameFlowController;
-        [SerializeField] CanvasManager canvasManager;
-        [SerializeField] ScoreManager scoreManager;
-        [SerializeField] MerdgeDicesController merdgeDicesController;
-        [SerializeField] InGameSounds inGameSounds;
-        [SerializeField] EndGameTriggeringSystem endGameTriggeringSystem;
-        [SerializeField] PoolOfParticlesToMerdge poolOfParticlesToMerdge;
+        [SerializeField] private DiceThrowerController diceThrowerController;
+        [SerializeField] private DicesMagnetController magneteForDices;
+        [SerializeField] private GameFlowController gameFlowController;
+        [SerializeField] private CanvasManager canvasManager;
+        [SerializeField] private ScoreManager scoreManager;
+        [SerializeField] private MerdgeDicesController merdgeDicesController;
+        [SerializeField] private InGameSounds inGameSounds;
+        [SerializeField] private EndGameTriggeringSystem endGameTriggeringSystem;
+        [SerializeField] private PoolOfParticlesToMerdge poolOfParticlesToMerdge;
 
         public override void InstallBindings()
         {
+            // Bindings for all necessary components
             Container.Bind<DiceThrowerController>().FromInstance(diceThrowerController).AsSingle();
             Container.Bind<DicesMagnetController>().FromInstance(magneteForDices).AsSingle();
             Container.Bind<GameFlowController>().FromInstance(gameFlowController).AsSingle();
@@ -37,3 +39,5 @@ namespace DiceGame.Mechanics.ContainerBinder
         }
     }
 }
+
+// 🍒
