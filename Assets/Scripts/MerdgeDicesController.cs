@@ -3,6 +3,7 @@ using DiceGame.Mechanics.InGameSoundsController;
 using DiceThrower.Mechanics.Thrower;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace DiceGame.Mechanics.DiceMerdger
 {
@@ -15,18 +16,10 @@ namespace DiceGame.Mechanics.DiceMerdger
 
         int scorePerDice;
         Vector3 posBetweenDices;
-        ScoreManager scoreManager;
-        InGameSounds inGameSounds;
-        PoolOfParticlesToMerdge poolOfParticlesToMerdge;
-        DiceThrowerController diceThrowerController;
-
-        private void Awake()
-        {
-            scoreManager = FindObjectOfType<ScoreManager>();
-            inGameSounds = FindObjectOfType<InGameSounds>();
-            poolOfParticlesToMerdge = FindObjectOfType<PoolOfParticlesToMerdge>();
-            diceThrowerController = FindObjectOfType<DiceThrowerController>();
-        }
+        [Inject] ScoreManager scoreManager;
+        [Inject] InGameSounds inGameSounds;
+        [Inject] PoolOfParticlesToMerdge poolOfParticlesToMerdge;
+        [Inject] DiceThrowerController diceThrowerController;
 
         public void PerformDicesMerdge(GameObject incDice_1, GameObject incDice_2, int _scorePerDice)
         {

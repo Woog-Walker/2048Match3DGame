@@ -1,22 +1,16 @@
-using DiceGame.InGameCanvasManager;
 using DiceGame.Mechanics.InGameScoreManager;
 using DiceThrower.Mechanics.Thrower;
+using DiceGame.InGameCanvasManager;
 using UnityEngine;
+using Zenject;
 
 namespace DiceGame.Mechanics.EndGameCase
 {
     public class EndGameTriggeringSystem : MonoBehaviour
     {
-        CanvasManager canvasManager;
-        ScoreManager scoreManager;
-        DiceThrowerController diceThrowerController;
-
-        private void Awake()
-        {
-            canvasManager = FindObjectOfType<CanvasManager>();
-            scoreManager = FindObjectOfType<ScoreManager>();
-            diceThrowerController = FindObjectOfType<DiceThrowerController>();
-        }
+        [Inject] CanvasManager canvasManager;
+        [Inject] ScoreManager scoreManager;
+        [Inject] DiceThrowerController diceThrowerController;
 
         public void PerformEndGameCase()
         {

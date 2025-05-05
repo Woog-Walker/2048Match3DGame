@@ -4,25 +4,19 @@ using DiceThrower.Mechanics.Thrower;
 using System.Collections;
 using DiceGame.Mechanics.InGameSoundsController;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace DiceGame.GameFlow
 {
     public class GameFlowController : MonoBehaviour
     {
-        CanvasManager canvasManager;
-        DiceThrowerController diceThrowerController;
-        InGameSounds inGameSounds;
+        [Inject] CanvasManager canvasManager;
+        [Inject] DiceThrowerController diceThrowerController;
+        [Inject] InGameSounds inGameSounds;
 
         int targetFps = 100;
 
         private void Start() => SetTargetAppFps();
-
-        private void Awake()
-        {
-            canvasManager = FindObjectOfType<CanvasManager>();
-            diceThrowerController = FindObjectOfType<DiceThrowerController>();
-            inGameSounds = FindObjectOfType<InGameSounds>();
-        }
 
         public void StartGameFlow() => StartCoroutine(DelayForStartEngine());
 

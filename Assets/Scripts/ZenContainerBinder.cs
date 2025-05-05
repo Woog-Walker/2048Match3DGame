@@ -21,6 +21,7 @@ namespace DiceGame.Mechanics.ContainerBinder
         [SerializeField] MerdgeDicesController merdgeDicesController;
         [SerializeField] InGameSounds inGameSounds;
         [SerializeField] EndGameTriggeringSystem endGameTriggeringSystem;
+        [SerializeField] PoolOfParticlesToMerdge poolOfParticlesToMerdge;
 
         public override void InstallBindings()
         {
@@ -32,6 +33,7 @@ namespace DiceGame.Mechanics.ContainerBinder
             Container.Bind<MerdgeDicesController>().FromInstance(merdgeDicesController).AsSingle();
             Container.Bind<InGameSounds>().FromInstance(inGameSounds).AsSingle();
             Container.Bind<EndGameTriggeringSystem>().FromInstance(endGameTriggeringSystem).AsSingle();
+            Container.Bind<PoolOfParticlesToMerdge>().FromInstance(poolOfParticlesToMerdge).AsSingle();
         }
     }
 }

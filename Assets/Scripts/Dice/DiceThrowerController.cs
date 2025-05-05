@@ -4,7 +4,8 @@ using DiceGame.SingleDice.Controller;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
- 
+using Zenject;
+
 namespace DiceThrower.Mechanics.Thrower
 {
     public class DiceThrowerController : MonoBehaviour
@@ -19,14 +20,12 @@ namespace DiceThrower.Mechanics.Thrower
         float chanceFor4x = 25; // 25 % for 4x dice
 
         Camera mainCamera;
-        InGameSounds inGameSounds;
-        DicesMagnetController dicesMagnetController;
+        [Inject] InGameSounds inGameSounds;
+        [Inject] DicesMagnetController dicesMagnetController;
 
         private void Awake()
         {
             mainCamera = Camera.main;
-            inGameSounds = FindObjectOfType<InGameSounds>();
-            dicesMagnetController = FindObjectOfType<DicesMagnetController>();
         }
 
         private void Update()
@@ -93,6 +92,7 @@ namespace DiceThrower.Mechanics.Thrower
             _tmpDice.GetComponent<DiceController>().SetDiceMaterial();
             _tmpDice.GetComponent<DiceController>().SetDiceCanvasValue();
             _tmpDice.GetComponent<DiceController>().DiceAppearTweenSale(timeCdForSpawn);
+            _tmpDice.GetComponent<DiceController>().EnableCaseToTriggerWithEndGameZone();
 
             dicesMagnetController.FindDicesInRange(_tmpDice.transform);
             GameObject magneteDice =  dicesMagnetController.PushDiceToSimiliar(diceValue);

@@ -3693,6 +3693,7 @@ Transform:
   - {fileID: 1107471183}
   - {fileID: 1175464507}
   - {fileID: 230760401}
+  - {fileID: 2014764736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1383168944
@@ -5085,6 +5086,7 @@ MonoBehaviour:
   merdgeDicesController: {fileID: 1383767471}
   inGameSounds: {fileID: 1107471180}
   endGameTriggeringSystem: {fileID: 1175464508}
+  poolOfParticlesToMerdge: {fileID: 230760402}
 --- !u!4 &2014764736
 Transform:
   m_ObjectHideFlags: 0
@@ -5093,12 +5095,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014764734}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1370658765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2014764737
 MonoBehaviour:
@@ -6381,4 +6383,3 @@ SceneRoots:
   - {fileID: 543450652613333424}
   - {fileID: 419165430}
   - {fileID: 1370658765}
-  - {fileID: 2014764736}

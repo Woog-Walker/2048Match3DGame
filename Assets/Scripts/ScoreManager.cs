@@ -1,5 +1,6 @@
 using UnityEngine;
 using DiceGame.InGameCanvasManager;
+using Zenject;
 
 namespace DiceGame.Mechanics.InGameScoreManager
 {
@@ -8,14 +9,9 @@ namespace DiceGame.Mechanics.InGameScoreManager
         [SerializeField] int currentScore = 0;
         [SerializeField] int highScore = 0;
 
-        CanvasManager canvasManager;
+        [Inject] CanvasManager canvasManager;
 
         const string highScorePrefs = "prefHighScore001";
-
-        private void Awake()
-        {
-            canvasManager = FindObjectOfType<CanvasManager>();
-        }
 
         private void Start()
         {
