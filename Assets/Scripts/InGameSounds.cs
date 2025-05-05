@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DiceGame.InGameSoundsController
+namespace DiceGame.Mechanics.InGameSoundsController
 {
     public class InGameSounds : MonoBehaviour
     {

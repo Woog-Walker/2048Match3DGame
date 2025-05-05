@@ -1,5 +1,5 @@
-using DiceGame.InGameSoundsController;
-using DiceGame.MagneteForDices;
+using DiceGame.Mechanics.InGameSoundsController;
+using DiceGame.Mechanics.MagneteForDices;
 using DiceGame.SingleDice.Controller;
 using System.Collections;
 using System.Threading.Tasks;

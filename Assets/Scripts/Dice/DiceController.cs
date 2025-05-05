@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using DiceGame.SingleDice.Canvas;
 using DiceGame.SingleDice.Materials;
-using DiceGame.DiceMerdger;
-using DiceGame.EndGameCase;
+using DiceGame.Mechanics.DiceMerdger;
+using DiceGame.Mechanics.EndGameCase;
 using DG.Tweening;
 using UnityEngine;
 

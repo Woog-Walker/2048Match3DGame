@@ -2,7 +2,7 @@ using UnityEngine;
 using DiceGame.InGameCanvasManager;
 using DiceThrower.Mechanics.Thrower;
 using System.Collections;
-using DiceGame.InGameSoundsController;
+using DiceGame.Mechanics.InGameSoundsController;
 using UnityEngine.SceneManagement;
 
 namespace DiceGame.GameFlow

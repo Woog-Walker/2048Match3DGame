@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using DiceGame.SingleDice.Controller;
 
-namespace DiceGame.MagneteForDices
+namespace DiceGame.Mechanics.MagneteForDices
 {
     public class DicesMagnetController : MonoBehaviour
     {

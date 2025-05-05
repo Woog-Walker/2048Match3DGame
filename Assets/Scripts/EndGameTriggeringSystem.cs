@@ -1,10 +1,9 @@
 using DiceGame.InGameCanvasManager;
-using DiceGame.InGameScoreManager;
+using DiceGame.Mechanics.InGameScoreManager;
 using DiceThrower.Mechanics.Thrower;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace DiceGame.EndGameCase
+namespace DiceGame.Mechanics.EndGameCase
 {
     public class EndGameTriggeringSystem : MonoBehaviour
     {

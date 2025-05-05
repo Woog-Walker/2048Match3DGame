@@ -1,7 +1,7 @@
 using UnityEngine;
 using DiceGame.InGameCanvasManager;
 
-namespace DiceGame.InGameScoreManager
+namespace DiceGame.Mechanics.InGameScoreManager
 {
     public class ScoreManager : MonoBehaviour
     {

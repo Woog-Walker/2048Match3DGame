@@ -1,10 +1,10 @@
-using DiceGame.InGameScoreManager;
-using DiceGame.InGameSoundsController;
+using DiceGame.Mechanics.InGameScoreManager;
+using DiceGame.Mechanics.InGameSoundsController;
 using DiceThrower.Mechanics.Thrower;
 using System.Collections;
 using UnityEngine;
 
-namespace DiceGame.DiceMerdger
+namespace DiceGame.Mechanics.DiceMerdger
 {
     public class MerdgeDicesController : MonoBehaviour
     {
