@@ -16,7 +16,6 @@ namespace DiceGame.Mechanics.Thrower
         [SerializeField] private Vector3 diceStartPosition;
 
         [Header("Throw Settings")]
-        [SerializeField] private float forceAmount;
         [SerializeField] private float holdOffset;
         [SerializeField] private float clampValueX;
         [SerializeField] private float timeCdForSpawn;

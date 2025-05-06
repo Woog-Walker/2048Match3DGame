@@ -3,8 +3,8 @@ using DiceGame.SingleDice.Canvas;
 using DiceGame.SingleDice.Materials;
 using DiceGame.Mechanics.DiceMerdger;
 using DiceGame.Mechanics.EndGameCase;
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
 
 namespace DiceGame.SingleDice.Controller
 {
@@ -24,7 +24,7 @@ namespace DiceGame.SingleDice.Controller
         private DiceMaterialChanger diceMaterialChanger;
         private DiceCanvasController diceCanvasController;
         private TrailRenderer trailRenderer;
-        private new Rigidbody rigidbody;
+        private Rigidbody rigidbody;
 
         static readonly Dictionary<int, int> valueToMaterialIndex = new()
         {
@@ -40,17 +40,14 @@ namespace DiceGame.SingleDice.Controller
             trailRenderer = GetComponentInChildren<TrailRenderer>();
             rigidbody = GetComponent<Rigidbody>();
 
-            merdgeDicesController = FindObjectOfType<MerdgeDicesController>();
-            endGameTriggeringSystem = FindObjectOfType<EndGameTriggeringSystem>();
+            merdgeDicesController = FindAnyObjectByType<MerdgeDicesController>();
+            endGameTriggeringSystem = FindAnyObjectByType<EndGameTriggeringSystem>();
         }
 
         public void TrailRendererChangeState(bool incState) => trailRenderer.enabled = incState;
 
-        public void DiceAppearTweenSale(float scaleTime)
-        {
-            transform.localScale = Vector3.zero;
-            transform.DOScale(Vector3.one, scaleTime);
-        }
+        public void DiceAppearTweenSale(float scaleTime) => transform.DOScale(Vector3.one, scaleTime);
+        
 
         public void SetDiceMaterial()
         {
