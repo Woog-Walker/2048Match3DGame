@@ -9,6 +9,7 @@ using DiceGame.Mechanics.DiceMerdger;
 using DiceGame.Mechanics.InGameSoundsController;
 using DiceGame.Mechanics.EndGameCase;
 using DiceGame.Mechanics.PoolOfVFX;
+using DiceGame.Mechanics.TouchInput;
 
 namespace DiceGame.Mechanics.ContainerBinder
 {
@@ -23,6 +24,7 @@ namespace DiceGame.Mechanics.ContainerBinder
         [SerializeField] private InGameSounds inGameSounds;
         [SerializeField] private EndGameTriggeringSystem endGameTriggeringSystem;
         [SerializeField] private PoolOfParticlesToMerdge poolOfParticlesToMerdge;
+        [SerializeField] private TouchInputController touchInputController;
 
         public override void InstallBindings()
         {
@@ -36,6 +38,7 @@ namespace DiceGame.Mechanics.ContainerBinder
             Container.Bind<InGameSounds>().FromInstance(inGameSounds).AsSingle();
             Container.Bind<EndGameTriggeringSystem>().FromInstance(endGameTriggeringSystem).AsSingle();
             Container.Bind<PoolOfParticlesToMerdge>().FromInstance(poolOfParticlesToMerdge).AsSingle();
+            Container.Bind<TouchInputController>().FromInstance(touchInputController).AsSingle();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using DiceGame.Mechanics.TouchInput;
 
 namespace DiceGame.Mechanics.Thrower
 {
@@ -22,7 +23,6 @@ namespace DiceGame.Mechanics.Thrower
 
         [Header("State")]
         private bool canThrow;
-        private bool isGameOver;
 
         private GameObject diceToThrow;
         private float chanceFor4x = 25f;
@@ -30,33 +30,17 @@ namespace DiceGame.Mechanics.Thrower
 
         [Inject] private InGameSounds inGameSounds;
         [Inject] private DicesMagnetController dicesMagnetController;
+        [Inject] private TouchInputController touchInputController; // Внедряем контроллер ввода
 
-        private void Awake() => mainCamera = Camera.main;
-
-        private void Update()
+        private void Awake()
         {
-            if (isGameOver || !canThrow || Input.touchCount == 0) return;
-
-            foreach (Touch touch in Input.touches)
-            {
-                if (touch.position.y >= Screen.height / 2) continue;
-
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        MoveDiceBack();
-                        break;
-                    case TouchPhase.Moved:
-                        MoveDiceWithTouch(touch.position);
-                        break;
-                    case TouchPhase.Ended:
-                        ThrowDice();
-                        break;
-                }
-            }
+            mainCamera = Camera.main;
+            touchInputController.OnTouchBegin += MoveDiceBack;
+            touchInputController.OnTouchMove += MoveDiceWithTouch;
+            touchInputController.OnTouchEnd += ThrowDice;
         }
 
-        private void MoveDiceBack()
+        private void MoveDiceBack(Vector2 touchPosition)
         {
             if (diceToThrow == null) return;
 
@@ -76,7 +60,6 @@ namespace DiceGame.Mechanics.Thrower
             float clampedX = Mathf.Clamp(worldPos.x, -clampValueX, clampValueX);
             diceToThrow.transform.position = new Vector3(clampedX, diceToThrow.transform.position.y, diceToThrow.transform.position.z);
         }
-
 
         public void CreateDice()
         {
@@ -121,7 +104,7 @@ namespace DiceGame.Mechanics.Thrower
 
         private void ThrowDice()
         {
-            if (diceToThrow == null) return;
+            if (diceToThrow == null || !canThrow) return;
 
             var controller = diceToThrow.GetComponent<DiceController>();
             controller.PerformPushmentForward();
@@ -143,6 +126,18 @@ namespace DiceGame.Mechanics.Thrower
 
         private float GenerateRandomValueForDice() => Random.Range(0f, 100f);
 
-        public void SetStateGameOver() => isGameOver = true;
+        public void SetStateGameOver()
+        {
+            touchInputController.OnTouchBegin -= MoveDiceBack;
+            touchInputController.OnTouchMove -= MoveDiceWithTouch;
+            touchInputController.OnTouchEnd -= ThrowDice;
+        }
+
+        private void OnDestroy()
+        {
+            touchInputController.OnTouchBegin -= MoveDiceBack;
+            touchInputController.OnTouchMove -= MoveDiceWithTouch;
+            touchInputController.OnTouchEnd -= ThrowDice;
+        }
     }
 }

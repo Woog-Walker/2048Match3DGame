@@ -3694,6 +3694,7 @@ Transform:
   - {fileID: 1107471183}
   - {fileID: 1175464507}
   - {fileID: 230760401}
+  - {fileID: 1755679839}
   - {fileID: 2014764736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4681,6 +4682,50 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19877600, guid: 4f6a244c7d77f5a48b52aa44d32bf842, type: 3}
   m_PrefabInstance: {fileID: 1733364195}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1755679838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1755679839}
+  - component: {fileID: 1755679840}
+  m_Layer: 0
+  m_Name: Touch Input Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1755679839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755679838}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1370658765}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1755679840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755679838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a5129277e424d44a738a00024ec948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &1788063226 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19877600, guid: 4f6a244c7d77f5a48b52aa44d32bf842, type: 3}
@@ -4863,7 +4908,7 @@ GameObject:
   - component: {fileID: 1850141820}
   - component: {fileID: 1850141821}
   m_Layer: 0
-  m_Name: Gamee Flow Controller
+  m_Name: Game Flow Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5087,6 +5132,7 @@ MonoBehaviour:
   inGameSounds: {fileID: 1107471180}
   endGameTriggeringSystem: {fileID: 1175464508}
   poolOfParticlesToMerdge: {fileID: 230760402}
+  touchInputController: {fileID: 1755679840}
 --- !u!4 &2014764736
 Transform:
   m_ObjectHideFlags: 0
