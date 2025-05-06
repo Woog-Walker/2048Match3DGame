@@ -7,7 +7,7 @@ namespace DiceGame.Mechanics.MagneteForDices
 {
     public class DicesMagnetController : MonoBehaviour
     {
-        public List<GameObject> dicesInRange = new();
+        [SerializeField] public List<GameObject> dicesInRange = new();
 
         [SerializeField] private float searchRadius;
         private const string diceTag = "Dice";

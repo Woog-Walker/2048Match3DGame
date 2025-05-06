@@ -1220,7 +1220,6 @@ RectTransform:
   - {fileID: 33407051}
   - {fileID: 169527429}
   - {fileID: 95089642}
-  - {fileID: 757772026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1925,11 +1924,11 @@ Transform:
   m_GameObject: {fileID: 757772023}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -480.3845, y: -1040.8331, z: 0}
-  m_LocalScale: {x: 0.88960093, y: 0.88960093, z: 0.88960093}
+  m_LocalPosition: {x: 0, y: -0.00012207031, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 419165430}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &785196677
 MeshCollider:
@@ -5048,7 +5047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dicesInRange: []
-  searchRadius: 7
+  searchRadius: 5
 --- !u!1 &2014764734
 GameObject:
   m_ObjectHideFlags: 0
@@ -6381,6 +6380,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1328364539}
   - {fileID: 1620849768}
-  - {fileID: 543450652613333424}
+  - {fileID: 757772026}
   - {fileID: 419165430}
+  - {fileID: 543450652613333424}
   - {fileID: 1370658765}

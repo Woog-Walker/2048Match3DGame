@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace DiceThrower.Mechanics.Thrower
+namespace DiceGame.Mechanics.Thrower
 {
     public class DiceThrowerController : MonoBehaviour
     {

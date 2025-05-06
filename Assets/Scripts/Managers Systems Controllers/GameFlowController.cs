@@ -1,6 +1,6 @@
 using UnityEngine;
 using DiceGame.Mechanics.InGameCanvasManager;
-using DiceThrower.Mechanics.Thrower;
+using DiceGame.Mechanics.Thrower;
 using System.Collections;
 using DiceGame.Mechanics.InGameSoundsController;
 using UnityEngine.SceneManagement;

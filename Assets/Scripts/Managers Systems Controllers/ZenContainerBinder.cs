@@ -1,6 +1,6 @@
 using Zenject;
 using UnityEngine;
-using DiceThrower.Mechanics.Thrower;
+using DiceGame.Mechanics.Thrower;
 using DiceGame.Mechanics.MagneteForDices;
 using DiceGame.Mechanics.GameFlow;
 using DiceGame.Mechanics.InGameCanvasManager;

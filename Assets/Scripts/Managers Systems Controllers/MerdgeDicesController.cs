@@ -1,7 +1,7 @@
 using DiceGame.Mechanics.InGameScoreManager;
 using DiceGame.Mechanics.InGameSoundsController;
 using DiceGame.Mechanics.PoolOfVFX;
-using DiceThrower.Mechanics.Thrower;
+using DiceGame.Mechanics.Thrower;
 using System.Collections;
 using UnityEngine;
 using Zenject;
