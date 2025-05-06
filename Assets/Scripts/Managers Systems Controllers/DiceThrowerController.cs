@@ -1,8 +1,8 @@
 using DiceGame.Mechanics.InGameSoundsController;
 using DiceGame.Mechanics.MagneteForDices;
 using DiceGame.SingleDice.Controller;
-using System.Collections;
 using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -59,6 +59,7 @@ namespace DiceGame.Mechanics.Thrower
         private void MoveDiceBack()
         {
             if (diceToThrow == null) return;
+
             var pos = diceToThrow.transform.position;
             pos.z -= holdOffset;
             diceToThrow.transform.position = pos;

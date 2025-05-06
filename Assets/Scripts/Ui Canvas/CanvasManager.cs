@@ -20,6 +20,7 @@ namespace DiceGame.Mechanics.InGameCanvasManager
         [SerializeField] GameObject panelGameOver;
         [SerializeField] TMP_Text textOverScore;
 
+        [Space]
         [SerializeField] Image[] startLineImages;
         [SerializeField] Button buttonPlay;
 

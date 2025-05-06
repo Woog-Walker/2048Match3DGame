@@ -5623,7 +5623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652613333424}
   m_Layer: 0
-  m_Name: inGame Deck
+  m_Name: inGame Deck Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
